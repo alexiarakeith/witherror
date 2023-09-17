@@ -1,12 +1,14 @@
-import InfoCard from '@/components/InfoCard'
-import { RiPlantLine } from 'react-icons/ri'
-import { BiUserCircle } from 'react-icons/bi'
-import { TbPlant2 } from 'react-icons/tb'
+import React from 'react';
+import InfoCard from '@/components/InfoCard';
+import { RiPlantLine } from 'react-icons/ri';
+import { BiUserCircle } from 'react-icons/bi';
+import { TbPlant2 } from 'react-icons/tb';
+import TopPlantsByMonth from '@/components/topPlantsByMonth'; // Import the TopPlantsByMonth component
 
 export default function Home({ userCount, plantCount, gardenCount }) {
   return (
     <div>
-      <h1 className='text-4xl font-fig'>Welcome to Plantopia Admin Panel 🌱</h1>
+      <h1 className='text-4xl font-fig'>Welcome to Plantopia Admin Panel</h1>
 
       <div className='flex justify-center items-center gap-5 py-8'>
         <InfoCard
@@ -27,20 +29,22 @@ export default function Home({ userCount, plantCount, gardenCount }) {
           title={'User Gardens'}
           value={('000' + gardenCount).slice(-4)}
         />
+        {/* Include the TopPlantsByMonth component */}
+        <TopPlantsByMonth />
       </div>
     </div>
-  )
+  );
 }
 
 export async function getServerSideProps() {
   const { userCount, plantCount, gardenCount } = await (
     await fetch('http://localhost:3000/api/analytics')
-  ).json()
+  ).json();
   return {
     props: {
       userCount: userCount,
       plantCount: plantCount,
       gardenCount: gardenCount,
     },
-  }
+  };
 }
